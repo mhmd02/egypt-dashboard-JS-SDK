@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Egypt Governorates Operations Dashboard</title>
+
+    <!-- Calcite Design System -->
+    <script type="module" src="https://js.arcgis.com/calcite-components/2.8.0/calcite.esm.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/2.8.0/calcite.css" />
+
+    <!-- ArcGIS Map Components & JS API -->
+    <script type="module" src="https://js.arcgis.com/map-components/4.30/arcgis-map-components.esm.js"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" />
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <calcite-shell>
+        <calcite-shell-panel slot="panel-start" position="start" id="shell-panel">
+            <calcite-panel heading="Egypt Operations Dashboard" id="main-panel">
+
+                <calcite-block heading="Dashboard Counts" open>
+                    <div class="dashboard-counts">
+                        <calcite-card>
+                            <span slot="title" id="total-issues-count">0</span>
+                            <span slot="subtitle">Total Reported Issues</span>
+                        </calcite-card>
+                        <calcite-card>
+                            <span slot="title" id="visible-issues-count">0</span>
+                            <span slot="subtitle">Issues in Current View</span>
+                        </calcite-card>
+                    </div>
+                </calcite-block>
+
+                <calcite-block heading="Filter Issues" open>
+                    <calcite-label>
+                        Filter by Type:
+                        <calcite-select id="issue-filter">
+                            <calcite-option label="All Issues" value="All"></calcite-option>
+                            <calcite-option label="Violating Buildings" value="Violating Buildings"></calcite-option>
+                            <calcite-option label="Street Issues" value="Street Issues"></calcite-option>
+                        </calcite-select>
+                    </calcite-label>
+                </calcite-block>
+
+                <calcite-block heading="Report an Issue" open>
+                    <calcite-label>
+                        Issue Type:
+                        <calcite-select id="report-type">
+                            <calcite-option label="Violating Buildings" value="Violating Buildings"></calcite-option>
+                            <calcite-option label="Street Issues" value="Street Issues"></calcite-option>
+                        </calcite-select>
+                    </calcite-label>
+
+                    <calcite-label>
+                        Description:
+                        <calcite-text-area id="report-desc" placeholder="Enter issue details..."></calcite-text-area>
+                    </calcite-label>
+
+                    <calcite-button id="report-btn" width="full" icon-start="pin">Select Location on
+                        Map</calcite-button>
+                    <calcite-notice id="report-notice" icon="information" kind="info"
+                        style="margin-top: 10px; display: none;">
+                        <div slot="message">Click on the map to place the report.</div>
+                    </calcite-notice>
+                </calcite-block>
+
+                <calcite-block heading="Map Layers & Legend" open>
+                    <arcgis-layer-list reference-element="main-map"></arcgis-layer-list>
+                    <arcgis-legend reference-element="main-map"></arcgis-legend>
+                </calcite-block>
+
+            </calcite-panel>
+        </calcite-shell-panel>
+
+        <!-- Main Map Area -->
+        <arcgis-map id="main-map" basemap="dark-gray-vector">
+            <!-- Using a basic Light Gray Canvas basemap webmap id for a clean look -->
+            <!-- We will add the feature layers dynamically in JS -->
+        </arcgis-map>
+
+    </calcite-shell>
+
+    <!-- Success Alert -->
+    <calcite-alert id="success-alert" auto-close duration="fast" kind="success" icon="check-circle" placement="bottom">
+        <div slot="title">Success</div>
+        <div slot="message">Issue reported successfully!</div>
+    </calcite-alert>
+
+    <!-- Require standard JS API modules that map components don't expose directly -->
+    <script src="https://js.arcgis.com/4.30/"></script>
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>
